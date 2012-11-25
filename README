@@ -1,0 +1,3 @@
+Angular and Taffy implementation for Jira time tracking.  
+
+Node.js needs to be installed to run the server script, which is recommended for the Jasmine spec runner as well as overall best practice with taffy development to remove the file system from the equation (Windows at least).
