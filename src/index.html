@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  xmlns:ng="http://angularjs.org" ng-app>
+	<head>
+		<style>
+		h3 {cursor: hand}
+		</style>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+		<script type="text/javascript "src="http://code.jquery.com/jquery-1.8.2.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+	  	<script type="text/javascript" src="../lib/taffydb/taffy.js"></script>
+	  	<script type="text/javascript" src="jira.js" ></script>
+	  	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+		<script src="https://energyplus.atlassian.net/rest/api/2/search?jql=updated%20%3E=%202012-10-29%20AND%20updated%20%3C=%202012-11-09&maxResults=1000&fields=worklog&jsonp-callback=loadData"></script>
+	</head>
+
+	<body>
+		<div ng-controller="workLogCtrl">
+			<div >
+				<div ng-repeat="log in logs">
+				<h3 onclick="$('#{{log.project}}').toggle('puff')">	
+					{{log.project}} hours:{{log.hours}} cost: ${{log.cost}}
+				</h3>
+				<ul id="{{log.project}}" style="display: none;">
+					<li ng-repeat="line in log.worklogs">
+					<a target="issue" href="https://energyplus.atlassian.net/browse/{{line.issuekey}}?page=com.atlassian.jira.plugin.system.issuetabpanels:worklog-tabpanel">{{line.issuekey}}</a> - {{line.employee}} {{line.hours}} hours @ {{line.started | date:'medium' }}
+					</li>
+				</ul>
+				</div>
+			</div>
+			<hr/>By Employee
+			<div>
+				<table><tr><th>Employee</th><th>Hours</th></tr>
+				<tr ng-repeat="time in timeLogged">	
+					<td>{{time.name}}</td><td><A href="{{time.link}}">{{time.hours}}</A></td>
+				</tr>
+			    </table>
+			</div>
+		</div>
+	</body>
+</html>
