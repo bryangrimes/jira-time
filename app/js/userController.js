@@ -13,7 +13,6 @@ function getAll () {
 function loadUser (username) {
 	singleUser = new AllUsers.SingleUser(username);
 	singleUser.getRate(userRate);
-	console.log(singleUser);
 }
 
 function userRate () {

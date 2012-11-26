@@ -1,40 +1,43 @@
 
-
-
-
 describe("User Stuff" , function() {
 	it("can get all users", function(){
-		var users = new Users();
-		expect(users.getUsers).not.toBeUndefined();
-	});
-
-	it("create user object with name", function(){
-		var users = new Users();
-		var someone = new users.SingleUser('bgrimes');
-		expect(someone.userName).toEqual('bgrimes');
+		getAll();
+		expect(userData).not.toBeUndefined();
 	});
 
 	it("get single user", function(){
-		var users = new Users();
-	
-		var target = new users.SingleUser('bgrimes');
-		expect(target).not.toBeUndefined();
-		expect(target.userName).toEqual('bgrimes');
+		getAll();
+		loadUser('bgrimes');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.userName).toEqual('bgrimes');
 	});
 
-	it("get single user's rate", function(){
+	it("get manager user's rate", function(){
 		getAll();
 		loadUser('bgrimes');
 		expect(singleUser).not.toBeUndefined();
 		expect(singleUser.rate).toEqual(105);
 	});
 
+	it("get dev user's rate", function(){
+		getAll();
+		loadUser('jdennis');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.rate).toEqual(75);
+	});
 
-});
+	it("get qa user's rate", function(){
+		getAll();
+		loadUser('plahm');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.rate).toEqual(55);
+	});
 
-/*spyOn($, 'ajax').andCallFake(function (ajaxOptions) {
-			ajaxOptions.success({"test": "mgr"});
-		}); */
+	it("get db user's rate", function(){
+		getAll();
+		loadUser('dgelling');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.rate).toEqual(75);
+	});
 
-
-		
+});	
