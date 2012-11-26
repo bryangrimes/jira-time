@@ -14,73 +14,27 @@ describe("User Stuff" , function() {
 		expect(someone.userName).toEqual('bgrimes');
 	});
 
-	it("get single user's position", function(){
-		var all = null;
-
-		/*var users = new Users();
-		spyOn($, 'ajax').andCallFake(function (ajaxOptions) {
-			ajaxOptions.success({"bgrimes": "mgr"});
-		});
-		//users.getUsers(data);
-		
-
-		users.getUsers(function (data) {
-			all = data;
-		}); */
-
-		//var someone = new users.SingleUser('bgrimes');
-		//var position = someone.getPosition();
-
-		var users = new Users(), singleUser;
-
-		var loadUser = function (username) {
-			//going to load up the user 'bgrimes'
-			singleUser = new users.SingleUser(username);
-			//singleUser.getPosition(userPosition);
-			singleUser.getRate(userRate);
-
-			console.log(singleUser);
-
-		};
-		
-		/*var userPosition = function () {
-			//singleUser.getPosition(function (data){
-			//	console.log(data);
-			//});
-			//console.log('hi');
-			//console.log(all['bgrimes']);
-
-			//singleUser.position = all['bgrimes'];
-
-		};*/
-
-		var userRate = function () {
-			singleUser.getRate(function (data){
-				console.log(all);
-				singleUser.rate = (data[all[singleUser.userName]]);
-				console.log(singleUser.rate);
-			});
-		};
-
-		var getAll = function () {
-			users.getUsers(function (data) {
-				all = data;
-			});
-
-		};
-
-		getAll();
-		loadUser('bgrimes');
-
-		//expect(position).not.toBeUndefined();
-		//expect(position).toEqual('mgr');
+	it("get single user", function(){
+		var users = new Users();
+	
+		var target = new users.SingleUser('bgrimes');
+		expect(target).not.toBeUndefined();
+		expect(target.userName).toEqual('bgrimes');
 	});
 
-	/*it("get single user's rate", function(){
-		var users = new Users();
-		var someone = new users.SingleUser('bgrimes');
-		var rate = someone.getRate();
-		expect(rate).not.toBeUndefined();
-		expect(rate).toEqual(105);
-	});*/
+	it("get single user's rate", function(){
+		getAll();
+		loadUser('bgrimes');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.rate).toEqual(105);
+	});
+
+
 });
+
+/*spyOn($, 'ajax').andCallFake(function (ajaxOptions) {
+			ajaxOptions.success({"test": "mgr"});
+		}); */
+
+
+		
