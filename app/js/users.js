@@ -1,46 +1,56 @@
+// GRIMES:
+// using straight ajax call here and not getJSON as
+// Jasimine strokes out with async calls.
 
-function User (name) {
-	var rate = 0.0;
-	var position;
+function Users(){
 
-	this.getRate = function () {
-		if(position === undefined){
-			console.log('getting user position to then find rate');
-			this.getPosition();
-		}
+	var allUsers;
 
-		$.ajax({
-			url: '../app/data/rates.json',
-			async: false,
-			dataType: 'json',
-			success: function(data) {
-				//console.log(data);
-				console.log(name);
-				console.log(position);
-				console.log(data[position]);
-				rate = data[position];
-			}
-		});
-		return rate;
-	};
-
-	this.getPosition = function () {
+	this.getUsers = function (dataReturn) {
+		console.log('>>getUsers');
 		$.ajax({
 			url: '../app/data/jira_users.json',
 			async: false,
 			dataType: 'json',
 			success: function(data) {
-				position = data[name];
+				dataReturn(data);
 			}
 		});
-		return position;
 	};
 
-	//set name prop for use later I guess.
-	this.name = name;
+	this.SingleUser = function (name, dataReturn) {
+		//var rate = 0.0;
+		//var position;
+
+		this.getRate = function () {
+			if(position === undefined){
+				console.log('>>info: getting user position to then find rate');
+				this.getPosition();
+			}
+
+			$.ajax({
+				url: '../app/data/rates.json',
+				async: false,
+				dataType: 'json',
+				success: function(data) {
+					//rate = data[position];
+					dataReturn(data[position]);
+				}
+			});
+			//return rate;
+		};
+
+		this.getPosition = function () {
+			var user_data = null;
+			this.getUsers(function(data){
+				user_data = data;
+			});
+			position = user_data[name];
+			return position;
+		};
+
+		//set name prop for use later I guess.
+		this.name = name;
+	};
 }
 
-// Public
-User.prototype.getName = function () {
-	return this.name;
-};
