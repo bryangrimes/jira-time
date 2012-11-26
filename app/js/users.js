@@ -3,9 +3,6 @@
 // Jasimine strokes out with async calls.
 
 function Users(){
-
-	var allUsers;
-
 	this.getUsers = function (dataReturn) {
 		console.log('>>getUsers');
 		$.ajax({
@@ -18,15 +15,14 @@ function Users(){
 		});
 	};
 
-	this.SingleUser = function (name, dataReturn) {
-		//var rate = 0.0;
-		//var position;
+	this.SingleUser = function (name) {
+		rate = 0.0;
 
-		this.getRate = function () {
-			if(position === undefined){
-				console.log('>>info: getting user position to then find rate');
-				this.getPosition();
-			}
+		this.getRate = function (dataReturn) {
+			//if(position === undefined){
+			//	console.log('>>info: getting user position to then find rate');
+			//	this.getPosition();
+			//}
 
 			$.ajax({
 				url: '../app/data/rates.json',
@@ -34,23 +30,20 @@ function Users(){
 				dataType: 'json',
 				success: function(data) {
 					//rate = data[position];
-					dataReturn(data[position]);
+					dataReturn(data);
 				}
 			});
-			//return rate;
 		};
 
-		this.getPosition = function () {
-			var user_data = null;
-			this.getUsers(function(data){
-				user_data = data;
-			});
-			position = user_data[name];
-			return position;
-		};
+		/*this.getPosition = function (position, dataReturn) {
+			//var user_data = null;
+			console.log(name);
+			//console.log(allUsers);
+			//console.log(allUsers[name]);
+			this.position = position;
+		};*/
 
-		//set name prop for use later I guess.
-		this.name = name;
+		this.userName = name;
 	};
 }
 
