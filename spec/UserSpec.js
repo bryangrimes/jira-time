@@ -1,5 +1,5 @@
 
-describe("User Stuff" , function() {
+describe("User Access" , function() {
 	it("can get all users", function(){
 		getAll();
 		expect(userData).not.toBeUndefined();
@@ -11,7 +11,8 @@ describe("User Stuff" , function() {
 		expect(singleUser).not.toBeUndefined();
 		expect(singleUser.userName).toEqual('bgrimes');
 	});
-
+});
+describe("User Controller" , function() {
 	it("get manager user's rate", function(){
 		getAll();
 		loadUser('bgrimes');
