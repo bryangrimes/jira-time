@@ -5,18 +5,45 @@
 		h3 {cursor: hand}
 		</style>
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+		<link rel="stylesheet" type="text/css" media="all" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" />
+     	<link rel="stylesheet" type="text/css" media="all" href="../lib/daterangepicker.css" />
 		<script type="text/javascript "src="http://code.jquery.com/jquery-1.8.2.js"></script>
 		<script type="text/javascript" src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 	  	<script type="text/javascript" src="../lib/taffydb/taffy.js"></script>
 	  	<script type="text/javascript" src="../lib/date.js"></script>
-	  	<script type="text/javascript" src="js/jira.js" ></script>
-	  	<script type="text/javascript" src="js/users.js" ></script>
+	  	<script type="text/javascript" src="../lib/daterangepicker.js"></script>
+	  	<script type="text/javascript" src="js/UserAccess.js"></script>
+		<script type="text/javascript" src="js/JiraAccess.js"></script>
+
+		<script type="text/javascript" src="js/UserController.js"></script>
+		<script type="text/javascript" src="js/JiraController.js"></script>
 	  	
 	  	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-		<script src="https://energyplus.atlassian.net/rest/api/2/search?jql=updated%20%3E=%202012-10-29%20AND%20updated%20%3C=%202012-11-09&maxResults=1000&fields=worklog&jsonp-callback=loadData"></script>
+		<script src="https://energyplus.atlassian.net/rest/api/2/search?jql=updated%20%3E=%202012-10-29%20AND%20updated%20%3C=%202012-11-09&maxResults=1000&fields=worklog&jsonp-callback=doIt"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#reservation').daterangepicker();
+			});
+		</script>
 	</head>
 
 	<body>
+		<div class="well">
+			<form class="form-horizontal">
+			 <fieldset>
+			  <div class="control-group">
+			    <label class="control-label" for="reservation">Report dates:</label>
+			    <div class="controls">
+			     <div class="input-prepend">
+			       <span class="add-on"><i class="icon-calendar"></i></span><input type="text" name="reservation" id="reservation" />
+			     </div>
+			    </div>
+			  </div>
+			 </fieldset>
+			</form>
+		</div>
+
 		<div ng-controller="workLogCtrl">
 			<div >
 				<div ng-repeat="log in logs">

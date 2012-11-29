@@ -2,6 +2,11 @@
 
 var worklogs = TAFFY();
 
+function doIt(data){
+	taffyInsert(loadJiraLogs(data));
+	console.log(worklogs().count());
+}
+
 function loadJiraLogs(data){
 	var logs = [];
 
@@ -22,6 +27,7 @@ function loadJiraLogs(data){
 				logs.push(log);
 		});
 	});
+	//console.log(logs);
 	return logs;
 }
 
@@ -29,11 +35,9 @@ function taffyInsert(data){
 	worklogs.insert(data);
 }
 
-function workLogCtrl($scope) {
-
-	var projects = worklogs().distinct("project");
+function getLoggedWork() {
 	var logs=[];
-	projects.forEach(function(x){
+	worklogs().distinct("project").forEach(function(x){
 		var query = worklogs({project:x}).order("employee");
 		logs.push({project:x,
 					worklogs : query.get(),
@@ -41,15 +45,22 @@ function workLogCtrl($scope) {
 					hours: (query.sum("timeSpentSeconds")/3600).toFixed(2)
 				});
 		});
-	$scope.logs = logs;
+	return logs;
+}
 
-	var employees = worklogs().distinct("employee");
+function getLoggedTime(){
 	var timeLogged = [];
-	employees.forEach(function(x){
+	worklogs().distinct("employee").forEach(function(x){
 		var hours = (worklogs({employee:x}).sum("timeSpentSeconds")/3600).toFixed(2);
 		var tickets = worklogs({employee:x}).distinct("issuekey");
 		var link = "https://energyplus.atlassian.net/issues/?jql=key%20in%20(" + tickets.join('%2C') + ")";
 		timeLogged.push({name: x, hours:hours, link:link});
 		});
-	$scope.timeLogged = timeLogged;
+	console.log(timeLogged);
+	return timeLogged;
+}
+
+function workLogCtrl($scope) {
+	$scope.logs = getLoggedWork();
+	$scope.timeLogged = getLoggedTime();
 }
