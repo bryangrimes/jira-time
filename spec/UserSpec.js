@@ -12,19 +12,20 @@ describe("User Access" , function() {
 		expect(singleUser.userName).toEqual('bgrimes');
 	});
 });
-describe("User Controller" , function() {
-	it("get manager user's rate", function(){
-		getAll();
-		loadUser('bgrimes');
-		expect(singleUser).not.toBeUndefined();
-		expect(singleUser.rate).toEqual(105);
-	});
 
-	it("get dev user's rate", function(){
+describe("User Controller" , function() {
+	it("get app user's rate", function(){
 		getAll();
-		loadUser('jdennis');
+		loadUser('ibeiu');
 		expect(singleUser).not.toBeUndefined();
 		expect(singleUser.rate).toEqual(75);
+	});
+
+	it("get pm user's rate", function(){
+		getAll();
+		loadUser('ctanker');
+		expect(singleUser).not.toBeUndefined();
+		expect(singleUser.rate).toEqual(60);
 	});
 
 	it("get qa user's rate", function(){
@@ -41,4 +42,4 @@ describe("User Controller" , function() {
 		expect(singleUser.rate).toEqual(75);
 	});
 
-});	
+});

@@ -45,6 +45,7 @@ function getLoggedWork() {
 					hours: (query.sum("timeSpentSeconds")/3600).toFixed(2)
 				});
 		});
+	//console.log(logs);
 	return logs;
 }
 
@@ -56,7 +57,6 @@ function getLoggedTime(){
 		var link = "https://energyplus.atlassian.net/issues/?jql=key%20in%20(" + tickets.join('%2C') + ")";
 		timeLogged.push({name: x, hours:hours, link:link});
 		});
-	console.log(timeLogged);
 	return timeLogged;
 }
 

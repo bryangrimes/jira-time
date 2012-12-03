@@ -35,13 +35,14 @@ describe("Jira Access" , function() {
 });
 
 describe("Jira Controller" , function() {
+
 	it("can load jira logs into taffy", function(){
 		loadTaffyWithMockData(mockJiraResponse);
 		expect(worklogs().count()).toBeGreaterThan(0);
 	});
 
 	it("can get distinct list of projects from taffy", function() {
-		loadTaffyWithMockData(mockJiraResponse);
+		//loadTaffyWithMockData(mockJiraResponse);
 		var logs = getLoggedWork();
 		expect(logs.length).toBe(3);
 	});
@@ -55,7 +56,7 @@ describe("Jira Controller" , function() {
 	});
 
 	it("ALP project (PROFIT-489) has three worklogs", function() {
-		loadTaffyWithMockData(mockedALP);
+		//loadTaffyWithMockData(mockedALP);
 		var logs = getLoggedWork();
 		var workLogs = 0;
 		logs.forEach(function(log){
@@ -65,7 +66,7 @@ describe("Jira Controller" , function() {
 	});
 
 	it("ALP project (PROFIT-489) has two distinct users", function() {
-		loadTaffyWithMockData(mockedALP);
+		//loadTaffyWithMockData(mockedALP);
 		var logs = getLoggedWork();
 		// with the log of the of item, get the worklogs and asset there are TWO distinct users
 		var workLogs = [];
@@ -81,6 +82,38 @@ describe("Jira Controller" , function() {
 		});
 		expect(distinctUsers.getUnique().length).toBe(2);
 	});
+
+	it("ALP project (PROFIT-489) sums rates for cost", function() {
+		//loadTaffyWithMockData(mockedALP);
+		var logs = getLoggedWork();
+		var workLogs = [];
+		logs.forEach(function(log){
+			log.worklogs.forEach(function(wl){
+				workLogs.push(wl);
+			});
+		});
+
+		getAll();
+		expect(AllUsers).not.toBeUndefined();
+
+		var cost = 0;
+		workLogs.forEach(function(l) {
+			loadUser(l.employee);
+			expect(singleUser).not.toBeUndefined();
+			//console.log(singleUser.rate);
+			cost += (singleUser.rate * l.hours);
+		});
+
+		expect(cost).toBeGreaterThan(0);
+		expect(cost).toBe(1462.5);
+	});
+
+	it("can pull logged time", function(){
+		//loadTaffyWithMockData(mockJiraResponse);
+		var time = getLoggedTime();
+		console.log(time);
+	});
+
 });
 
 /* scraps:
@@ -117,17 +150,3 @@ var projHours = 0;
 		expect(scope.timeLogged).toHaveLength(3);
 	});
 });*/
-
-function callMock(mock, data) {
-	spyOn($, 'ajax').andCallFake(function (ajaxOptions) {
-		ajaxOptions.success(mock);
-	});
-}
-
-function loadTaffyWithMockData(mock){
-	//blow away data first, then reload with mock
-	worklogs().remove();
-	callMock(mock);
-	queryJira(function (data) { taffyInsert(loadJiraLogs(data)); });
-}
-

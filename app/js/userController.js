@@ -7,7 +7,6 @@ function getAll () {
 	AllUsers.getUsers(function (data) {
 		userData = data;
 	});
-
 }
 
 function loadUser (username) {
@@ -20,31 +19,3 @@ function userRate () {
 		singleUser.rate = (data[userData[singleUser.userName]]);
 	});
 }
-
-
-/*
-
-var AllUsers = new Users(), singleUser;
-
-var loadUser = function (username) {
-	singleUser = new AllUsers.SingleUser(username);
-	singleUser.getRate(userRate);
-	//console.log(singleUser);
-};
-
-var userRate = function () {
-	singleUser.getRate(function (data){
-		singleUser.rate = (data[allUsers[singleUser.userName]]);
-	});
-};
-
-var getAll = function () {
-	AllUsers.getUsers(function (data) {
-		allUsers = data;
-	});
-
-};
-
-getAll();
-loadUser('jdennis');
-*/
