@@ -45,8 +45,32 @@ function getLoggedWork() {
 					hours: (query.sum("timeSpentSeconds")/3600).toFixed(2)
 				});
 		});
-	//console.log(logs);
 	return logs;
+}
+
+function getProjectlogs(){
+	getAll();
+
+	var logs = getLoggedWork();
+	var cost = 0;
+	logs.forEach(function(log){
+		cost = 0;
+		log.worklogs.forEach(function(wl){
+			loadUser(wl.employee);
+			cost += (singleUser.rate * wl.hours);
+		});
+		log.cost = cost;
+	});
+	return logs;
+}
+
+function getUserProjectTime(){
+	var timeLogged = [];
+	worklogs().distinct("employee").forEach(function(x){
+		var hours = (worklogs({employee:x}).sum("timeSpentSeconds")/3600).toFixed(2);
+		timeLogged.push({name: x, hours:hours});
+		});
+	return timeLogged;
 }
 
 function getLoggedTime(){
@@ -61,6 +85,6 @@ function getLoggedTime(){
 }
 
 function workLogCtrl($scope) {
-	$scope.logs = getLoggedWork();
+	$scope.logs = getProjectlogs();
 	$scope.timeLogged = getLoggedTime();
 }

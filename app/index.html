@@ -50,9 +50,14 @@
 				<h3 onclick="$('#{{log.project}}').toggle('puff')">	
 					{{log.project}} hours:{{log.hours}} cost: ${{log.cost}}
 				</h3>
-				<ul id="{{log.project}}" style="display: none;">
+				<!-- <ul id="{{log.project}}" style="display: none;">
 					<li ng-repeat="line in log.worklogs">
 					<a target="issue" href="https://energyplus.atlassian.net/browse/{{line.issuekey}}?page=com.atlassian.jira.plugin.system.issuetabpanels:worklog-tabpanel">{{line.issuekey}}</a> - {{line.employee}} {{line.hours}} hours @ {{line.started | date:'medium' }}
+					</li>
+				</ul> -->
+				<ul id="{{log.project}}" style="display: none;">
+					<li ng-repeat="line in log.worklogs">
+					{{line.employee}} {{line.hours}} hours
 					</li>
 				</ul>
 				</div>
